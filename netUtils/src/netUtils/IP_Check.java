@@ -10,6 +10,7 @@ public class IP_Check {
 	private static String Network_Mask;
 	private static String Network_ID;
 	private static String Broadcast_Addr;
+	private static String Raw_Bits;
 	private static final String IPv4_REGEX ="^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$";
 	private static final Pattern IPv4_PATTERN = Pattern.compile(IPv4_REGEX);
 
@@ -85,7 +86,7 @@ public class IP_Check {
 			sb1.append(decimal).append(".");
 		}
 				
-		sb1.setLength(sb.length()-1);
+		sb1.setLength(sb1.length()-1);
 		
 		Network_Mask = sb1.toString();
 		
@@ -117,29 +118,58 @@ public class IP_Check {
 		
 		String bits = "";
 		int cont = 0;
-		for(int i=0;i<Network_Mask.length();i++) {
-			if(Network_Mask.charAt(i) == 0) {
+		int n = 0;
+		for(int i=0;i<Raw_Bits.length();i++) {
+			if(Raw_Bits.charAt(i) == '0') {
 				bits += '1';
 				cont++;
-			} else if(Network_Mask.charAt(i) == 1){
+			} else if(Raw_Bits.charAt(i) == '1'){
 				bits += '0';
 				cont++;
 			}
 			
-			if(cont == 8) {
+			if(cont == 8 && n <3) {
 				bits += '.';
 				cont = 0;
+				n++;
 			}
+		}	
+		
+		String octect_mask[] = bits.split("\\.");
+		
+		StringBuilder sb1 = new StringBuilder();
+		
+		for(String group : octect_mask) {
+			int decimal = Integer.parseInt(group,2);
+			sb1.append(decimal).append(".");
+		}
+				
+		sb1.setLength(sb1.length()-1);
+		
+		Broadcast_Addr = sb1.toString();
+			
+		String octect_ip[] = ip.split("\\.");
+		String octect_broad[] = Broadcast_Addr.split("\\.");
+		
+		StringBuilder sb = new StringBuilder();
+		
+		int addr;
+		int mask;
+		
+		for(int i=0; i <= 3;i++) {
+			addr = Integer.parseInt(octect_ip[i]);
+			mask = Integer.parseInt(octect_broad[i]);
+			sb.append(addr | mask).append(".");
 		}
 		
-		System.out.println(bits);
-		System.out.println(bits.length());
+		sb.setLength(sb.length()-1);
 		
-		
+		Broadcast_Addr = sb.toString();
 	}
 	
 	private static StringBuilder BinaryCalc(int mask) {
 		StringBuilder sb = new StringBuilder();   
+		StringBuilder sb1 = new StringBuilder();
 		
 		if(mask <= 8) {
 			
@@ -199,6 +229,10 @@ public class IP_Check {
 				sb.append("0");
 			}
 		}
+		
+		sb1 = sb;
+		Raw_Bits = sb1.toString().replace('.', ' ');
+		Raw_Bits = Raw_Bits.replaceAll("\\s","");
 		return sb;
 	}
 	
