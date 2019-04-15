@@ -35,10 +35,10 @@ public class IP_Check {
         
         System.out.println("Broadcast: " + Broadcast_Addr);
         
-        System.out.println("Número de IP's para host: ");
+        System.out.println("Número de IP's para host: "  + getNumberofIPs(mask));
         
-        System.out.println("Rango: ");
-		
+        System.out.print("Rango: ");
+		getRange(Network_ID, Broadcast_Addr);
 	}
 	
 
@@ -234,6 +234,42 @@ public class IP_Check {
 		Raw_Bits = sb1.toString().replace('.', ' ');
 		Raw_Bits = Raw_Bits.replaceAll("\\s","");
 		return sb;
+	}
+	
+	private static int getNumberofIPs(int mask) {
+		int result = 32 - mask;
+		result = (int) (Math.pow(2, result) - 2);
+		return result;
+	}
+	
+	private static void getRange(String id, String broadcast) {
+		
+		String octect_id[] = id.split("\\.");
+		String octect_broad[] = broadcast.split("\\.");
+		
+		StringBuilder primero = new StringBuilder();
+		StringBuilder ultimo = new StringBuilder();
+		
+		for(int i=0;i<=3;i++) {
+			if((octect_id[i]).equals(octect_broad[i])) {
+				primero.append(octect_id[i]).append(".");
+				ultimo.append(octect_broad[i]).append(".");
+			} else {
+				int menor = Integer.parseInt(octect_id[i]);
+				int mayor = Integer.parseInt(octect_broad[i]);
+				if(i == 3) {
+					menor++;
+					mayor--;
+				}
+				primero.append(menor).append(".");
+				ultimo.append(mayor).append(".");
+			}
+		}
+		
+		primero.setLength(primero.length() -1);
+		ultimo.setLength(ultimo.length() -1);
+		
+		System.out.println(primero.toString() + " - " + ultimo.toString());
 	}
 	
 }
