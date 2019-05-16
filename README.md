@@ -2,6 +2,6 @@
 
 ## Bloque I: Obtener Información de Red
 
-[Informacion Interfaces de Red](https://github.com/Hidden-Process/Redes/blob/master/netUtils/src/netUtils/netUtils.java)
+[Informacion Interfaces de Red](https://github.com/Hidden-Process/Redes/blob/master/Bloque%20I/netUtils.java)
 
-[Automatización del manejo de direcciones IP](https://github.com/Hidden-Process/Redes/blob/master/netUtils/src/netUtils/IP_Check.java)
+[Automatización del manejo de direcciones IP](https://github.com/Hidden-Process/Redes/blob/master/Bloque%20I/IP_Check.java)
