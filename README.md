@@ -5,3 +5,8 @@
 [Informacion Interfaces de Red](https://github.com/Hidden-Process/Redes/blob/master/Bloque%20I/netUtils.java)
 
 [Automatización del manejo de direcciones IP](https://github.com/Hidden-Process/Redes/blob/master/Bloque%20I/IP_Check.java)
+
+## Bloque II: TCP/UDP
+
+[Modificador de cadenas TCP](https://github.com/Hidden-Process/Redes/tree/master/Bloque%20II/Cliente-Servidor%20TCP)
+
