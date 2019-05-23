@@ -8,5 +8,9 @@
 
 ## Bloque II: TCP/UDP
 
-[Modificador de cadenas TCP](https://github.com/Hidden-Process/Redes/tree/master/Bloque%20II/Cliente-Servidor%20TCP)
+[Cliente Servidor TCP](https://github.com/Hidden-Process/Redes/tree/master/Bloque%20II/Cliente-Servidor%20TCP)
+
+[Chat UDP](https://github.com/Hidden-Process/Redes/blob/master/Bloque%20II/Chat%20UDP/ComunicacionImpl.java)
+
+
 
