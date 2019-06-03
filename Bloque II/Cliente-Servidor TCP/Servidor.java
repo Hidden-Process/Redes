@@ -3,6 +3,8 @@ import java.io.*;
 
 public class Servidor {
 
+    private static final int TIMEOUT = 40000;
+
     public static void main(String[] args) throws IOException {
 
         if(args.length != 1) throw new IllegalArgumentException("Introduzca el puerto como parametro");
@@ -12,12 +14,13 @@ public class Servidor {
         try {
             ServerSocket server = new ServerSocket(port,1);
 
-            System.out.println("Servidor Iniciado... Esperando Conexiones.");
+            System.out.println("Servidor Iniciado... Esperando Conexiones. \n");
 
             while (true) {
                 Socket client = server.accept();
+                client.setSoTimeout(TIMEOUT);
 
-                System.out.println("Conexión Aceptada de " + client);
+                System.out.println("Conexión Aceptada de " + client + "\n");
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 PrintWriter out = new PrintWriter(client.getOutputStream(), true);
@@ -46,8 +49,10 @@ public class Servidor {
                 out.close();
                 client.close();
 
-                System.out.println("Conexión con el cliente finalizada, esperando nueva conexión...");
+                System.out.println("Conexión con el cliente finalizada, esperando nueva conexión... \n");
             }
+        } catch(SocketTimeoutException s){
+            System.out.println("Tiempo excedido tras 40 segundos sin recibir datos del cliente");
         } catch (Exception e) {
             System.out.println("Error en el servidor " + e.getMessage());
             System.exit(-1);

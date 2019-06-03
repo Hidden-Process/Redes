@@ -12,12 +12,12 @@ public class Cliente {
         int port =  Integer.parseInt(args[1]);
 
         try {
-            Socket echoSocket = new Socket(address,port);
+            Socket clientSocket = new Socket(address,port);
 
             System.out.println("Conexión establecida con el server: " + address.getHostAddress() + " en el puerto " + port);
 
-            PrintWriter out = new PrintWriter(echoSocket.getOutputStream(),true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(),true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
             System.out.println(in.readLine());
             Scanner scan = new Scanner(System.in);
@@ -26,22 +26,22 @@ public class Cliente {
 
             while(!salir){
 
-                System.out.println("Introduzca la letra: ");
+                System.out.print("Introduzca la letra: ");
                 String letra = scan.nextLine();
 
                 if(letra.equals("f")){
                     out.println(letra +"\r\n");
-                    System.out.println(in.readLine());
+                    System.out.print(in.readLine());
                    salir = true;
                 } else {
-                    System.out.println("Introduzca el texto: ");
+                    System.out.print("Introduzca el texto: ");
                     String texto = scan.nextLine();
 
                     out.print(letra +"\r\n");
                     out.println(texto);
 
-                    System.out.println("Conectado a : " + address.getHostAddress() + ":" + port + ", Esperando la respuesta... \n");
-                    Thread.sleep(2000);
+                    System.out.println("Conectado a : " + address.getHostAddress() + ":" + port + ", Esperando la respuesta... ");
+                    Thread.sleep(1000);
 
                     String res = in.readLine();
                     System.out.println("El texto modificado es: " + res);
@@ -49,9 +49,14 @@ public class Cliente {
 
             }
 
+            System.out.println("\n");
+            System.out.println("Conexión con el servidor cerrada \n");
             out.close();
             in.close();
-            echoSocket.close();
+            clientSocket.close();
+
+        } catch (ConnectException c){
+            System.out.println("No se puedo establecer conexión con el servidor")
         } catch (Exception e) {
             System.err.println("Error en el cliente " + e.getMessage());
             System.exit(1);
