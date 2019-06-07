@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class Cliente {
 
+    private static final int MAX_TRIES = 3;
+
     public static void main(String[] args) throws IOException {
 
         if(args.length < 1 || args.length > 2) throw new IllegalArgumentException("Parametros: <IP> <Puerto>");
@@ -23,6 +25,7 @@ public class Cliente {
             Scanner scan = new Scanner(System.in);
 
             boolean salir = false;
+            int cont = 0;
 
             while(!salir){
 
@@ -44,7 +47,15 @@ public class Cliente {
                     Thread.sleep(1000);
 
                     String res = in.readLine();
-                    System.out.println("El texto modificado es: " + res);
+                    if(res == null){
+                        cont++;
+                        if(cont == MAX_TRIES){
+                            System.out.println("Maximo numero de intentos de conexión con el servidor superado.");
+                            salir = true;
+                        }
+                    } else {
+                            System.out.println("El texto modificado es: " + res);
+                    } 
                 }
 
             }
@@ -56,7 +67,7 @@ public class Cliente {
             clientSocket.close();
 
         } catch (ConnectException c){
-            System.out.println("No se puedo establecer conexión con el servidor")
+            System.out.println("No se puedo establecer conexión con el servidor");
         } catch (Exception e) {
             System.err.println("Error en el cliente " + e.getMessage());
             System.exit(1);
